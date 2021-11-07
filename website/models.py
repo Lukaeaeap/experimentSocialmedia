@@ -7,7 +7,8 @@ class Note(db.Model):
     # Change this to the format of a post later
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
-    data = db.Column(db.DateTime(timezone=True), default=func.now())
+    # Make sure the following is date with an 'e' and not an 'a'!
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
     # Get the user id out of the database part of the user, foreign keys use lowercase
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
