@@ -25,7 +25,7 @@ def login():
                 flash('Incorrect password, try again.', category='error')
         else:
             flash('Email does not exist', category='error')
-    return render_template("login.html")
+    return render_template("login.html", user=current_user)
 
 
 @auth.route('/logout')
@@ -33,7 +33,6 @@ def login():
 def logout():
     logout_user()
     flash('Logged out successfully!', category='succes')
-
     return redirect(url_for('auth.login'))
 
 
@@ -65,8 +64,8 @@ def sign_up():
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash('Account created', category='succes')
             # when logged in go back to the home page
             return redirect(url_for('views.home'))
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", user=current_user)
