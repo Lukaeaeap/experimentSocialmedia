@@ -1,5 +1,33 @@
-<!-- This extends the base.html file, that means that it will have the template on it
-After that I said load the template of a block of content and place the text in there.-->
+<!-- 
+This extends the base.html file, that means that it will have the template on it
+After that I said load the template of a block of content and place the text in there.
+With the double squigely brackets I say hey put a variable here, this variable is from the current_user, 
+and it is called the first_name in the database of this user.
+-->
 {% extends "base.html" %}{% block title %}Home{% endblock %} {% block content %}
-<h1>This is the home page</h1>
+<h1 align="center">This is the home page, {{current_user.first_name}}</h1>
+<h1 align="center">Notes</h1>
+<!--
+    For all notes add them to a list with the notes and display the data that is added in these notes.
+    Than make a button to delete a note with properties that are described in index.js
+    Also add an fancy x to this button with span
+-->
+
+<ul class="list-group list-group-flush" id="notes">
+  {% for note in user.notes %}
+  <li class="list-group-item">
+    {{ note.data }}
+    <button type="button" class="close" onClick="deleteNote( {{note.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+<form method="POST">
+  <textarea name="note" id="note" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Note</button>
+  </div>
+</form>
 {% endblock %}
